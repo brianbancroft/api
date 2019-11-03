@@ -5,4 +5,4 @@ import context from './auth';
 
 const server = new ApolloServer({ typeDefs, resolvers, context });
 
-export const graphqlHandler = server.createHandler({ cors: { origin: '*' } });
+export const graphqlHandler = server.createHandler({ cors: { origin: true } });

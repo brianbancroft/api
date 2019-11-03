@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 import * as jwksClient from 'jwks-rsa';
 import * as https from 'https';
 
@@ -32,7 +32,7 @@ const context = ({ event }) => {
   if (token.startsWith('Bearer ')) token = token.substring(7);
   if (token) {
     const auth = new Promise(resolve => {
-      jwt.verify(token, getKey, options, (err, decoded) => {
+      verify(token, getKey, options, (err, decoded) => {
         if (err) resolve(null);
         resolve(decoded);
       });
@@ -42,8 +42,11 @@ const context = ({ event }) => {
         let data = '';
         res.on('data', chunk => (data += chunk));
         res.on('end', () => {
-          if (data === 'Unauthorized') resolve(null);
-          else resolve(JSON.parse(data));
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            resolve(null);
+          }
         });
       });
       req.on('error', error => reject(error));
