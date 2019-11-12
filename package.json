@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "Serverless webpack example using Typescript",
+  "description": "Fieldmaps serverless API",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "upgrade-all": "./upgrade-all.sh && yarn upgrade"
